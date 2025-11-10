@@ -1,0 +1,19 @@
+# Contoh pola .gitignore
+
+# Abaikan semua file log
+*.log
+
+# Abaikan folder build
+build/
+node_modules/
+
+# Abaikan file lingkungan
+.env
+
+# Abaikan file OS
+.DS_Store
+Thumbs.db
+
+# Abaikan file IDE (misal VS Code)
+.vscode/
+.idea/
