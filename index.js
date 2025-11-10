@@ -3,7 +3,7 @@ dotenv.config();
 
 const express = require("express");
 const cors = require("cors");
-const sequelize = require("./config/db");
+const { sequelize, connectDB } = require("./config/db");
 
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
@@ -14,9 +14,8 @@ const Product = require("./models/Product");
 
 async function startServer() {
   try {
-    // Test database connection
-    await sequelize.authenticate();
-    console.log('✅ Database connection established successfully.');
+    // Connect to database first
+    await connectDB();
 
     const app = express();
     app.use(cors());
