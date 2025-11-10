@@ -8,6 +8,7 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   dialect: 'postgres',
+  logging: false, // Disable debug logging
   dialectOptions: {
     ssl: {
       require: true,
@@ -26,7 +27,7 @@ const sequelize = new Sequelize({
     timeout: 6000,
     match: [
       /ECONNREFUSED/,
-      /ETIMEDOUT/, 
+      /ETIMEDOUT/,
       /ENETUNREACH/,
       /EAI_AGAIN/
     ]
@@ -37,4 +38,14 @@ const sequelize = new Sequelize({
 // const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?sslmode=require&family=4`;
 // const sequelize = new Sequelize(connectionString);
 
-module.exports = sequelize;
+const connectDB = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Database connection established successfully.');
+  } catch (error) {
+    console.error('❌ Unable to connect to the database:', error);
+    throw error;
+  }
+};
+
+module.exports = { sequelize, connectDB };
