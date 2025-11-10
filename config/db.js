@@ -13,6 +13,11 @@ const sequelize = new Sequelize(
       schema: "public",
     },
     logging: false, // disable SQL logging
+    //     logging: (sql, timing) => {
+    //   console.log(`🔍 Query: ${sql}`);
+    //   if (timing) console.log(`⏱️  Execution time: ${timing}ms`);
+    // },
+    // benchmark: true
   }
 );
 
