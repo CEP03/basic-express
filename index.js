@@ -24,6 +24,32 @@ async function startServer() {
     app.use("/api/auth", authRoutes);
     app.use("/api/products", productRoutes);
 
+    // Tambahkan route root untuk testing
+    app.get('/', (req, res) => {
+      res.json({
+        message: 'API is running successfully! 🚀',
+        domain: 'api.cokrodev.xyz',
+        timestamp: new Date().toISOString(),
+        endpoints: [
+          '/api/auth/login',
+          '/api/auth/register',
+          '/api/products',
+          '/health'
+        ],
+        ssl: '✅ Active',
+        server: 'Express.js + Docker + Nginx'
+      });
+    });
+
+    // Health check endpoint
+    app.get('/health', (req, res) => {
+      res.status(200).json({
+        status: 'OK',
+        database: 'Connected', // atau sesuaikan dengan status DB
+        timestamp: new Date().toISOString()
+      });
+    });
+
     // Sync database and create tables
     await sequelize.sync({ alter: true });
     console.log("✅ Database synced (tables created successfully!)");
